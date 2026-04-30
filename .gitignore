@@ -1,0 +1,39 @@
+# ─────────────────────────────────────────
+# AEGIS INTELLIGENCE — Frontend .gitignore
+# ─────────────────────────────────────────
+
+# Dependencies
+node_modules/
+
+# Environment variables (NEVER commit these!)
+.env
+.env.local
+.env.production
+.env.development.local
+.env.test.local
+.env.production.local
+
+# Build output
+dist/
+build/
+
+# OS generated files
+.DS_Store
+.DS_Store?
+._*
+Thumbs.db
+
+# Editor
+.vscode/
+.idea/
+*.swp
+*.swo
+
+# Logs
+*.log
+
+# TypeScript cache
+*.tsbuildinfo
+
+# Vite cache
+.vite/

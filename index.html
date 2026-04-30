@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="en" class="dark">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover" />
+
+    <!-- PWA: Theme color for browser chrome (Android address bar, etc.) -->
+    <meta name="theme-color" content="#00d4ff" />
+
+    <!-- PWA: Standalone mode on iOS -->
+    <meta name="apple-mobile-web-app-capable" content="yes" />
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
+    <meta name="apple-mobile-web-app-title" content="Aegis" />
+
+    <meta name="description" content="Aegis Intelligence — AI-driven personal productivity and accountability system" />
+
+    <!-- PWA manifest -->
+    <link rel="manifest" href="/manifest.json" />
+
+    <!-- Favicon -->
+    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+
+    <!-- Apple touch icon (iOS home screen) -->
+    <link rel="apple-touch-icon" href="/favicon.svg" />
+
+    <!-- Preconnect to Google Fonts for faster loading -->
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+
+    <title>Aegis Intelligence</title>
+
+    <!-- Inline critical CSS to prevent flash of unstyled content -->
+    <style>
+      body {
+        background-color: #0a1628;
+        color: #e8eaf6;
+        margin: 0;
+        font-family: Inter, system-ui, sans-serif;
+      }
+      #root {
+        min-height: 100vh;
+        min-height: 100dvh;
+      }
+    </style>
+  </head>
+  <body>
+    <!-- React mounts here -->
+    <div id="root"></div>
+
+    <!-- Vite injects the bundled JS here in development -->
+    <script type="module" src="/src/main.jsx"></script>
+  </body>
+</html>
