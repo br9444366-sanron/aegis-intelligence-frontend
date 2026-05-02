@@ -305,7 +305,7 @@ export default function AIMemory() {
           <div style={{ display: 'flex', gap: 6, marginBottom: 12 }}>
             {TABS.map(t => (
               <button key={t.key} onClick={() => setTab(t.key)} style={{
-                flex: 1, padding: '9px 4px', borderRadius: 14, border: 'none', cursor: 'pointer',
+                flex: 1, padding: '9px 4px', borderRadius: 14, cursor: 'pointer',
                 background: tab === t.key ? '#6e50be' : '#111118',
                 color: tab === t.key ? 'white' : '#71717a',
                 fontSize: 12, fontWeight: 600,

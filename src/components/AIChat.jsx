@@ -11,7 +11,7 @@
  * ============================================================
  */
 
-import React, { useState, useRef, useEffect } from 'react';
+import React, { useState, useRef, useEffect, useCallback } from 'react';
 import { Send, X, Zap, ChevronDown } from 'lucide-react';
 import api from '../api/apiClient.js';
 import { useAuth } from '../context/AuthContext.jsx';
@@ -36,8 +36,23 @@ How can I help you today? You can ask me to analyze your productivity, create go
   ]);
   const [input,   setInput]   = useState('');
   const [loading, setLoading] = useState(false);
+  const [cooldown,  setCooldown]  = useState(0); // seconds remaining
+  const cooldownRef = useRef(null);
   const bottomRef = useRef(null);
   const inputRef  = useRef(null);
+
+  const startCooldown = useCallback((seconds = 10) => {
+    setCooldown(seconds);
+    clearInterval(cooldownRef.current);
+    cooldownRef.current = setInterval(() => {
+      setCooldown(prev => {
+        if (prev <= 1) { clearInterval(cooldownRef.current); return 0; }
+        return prev - 1;
+      });
+    }, 1000);
+  }, []);
+
+  useEffect(() => () => clearInterval(cooldownRef.current), []);
 
   // Auto-scroll to bottom on new messages
   useEffect(() => {
@@ -49,7 +64,7 @@ How can I help you today? You can ask me to analyze your productivity, create go
 
   const sendMessage = async (text) => {
     const messageText = text || input.trim();
-    if (!messageText || loading) return;
+    if (!messageText || loading || cooldown > 0) return;
 
     setInput('');
 
@@ -85,8 +100,20 @@ How can I help you today? You can ask me to analyze your productivity, create go
         const labels = { goal: '🎯 Goal', schedule: '📅 Task', diary: '📓 Diary entry' };
         toast.success(`${labels[data.data.commandType] || 'Item'} created!`);
       }
+
+      // Start the cooldown after a successful send
+      startCooldown(10);
+
     } catch (err) {
-      toast.error('Aegis is having a moment. Try again!');
+      const serverWait = err?.response?.data?.retryAfterSeconds;
+      if (err?.response?.status === 429 && serverWait) {
+        startCooldown(serverWait);
+        toast.error(`Wait ${serverWait}s before sending again.`);
+      } else if (err?.response?.data?.error === 'CharLimitExceeded') {
+        toast.error(err.response.data.message);
+      } else {
+        toast.error('Aegis is having a moment. Try again!');
+      }
       // Remove the optimistic user message on error
       setMessages((prev) => prev.slice(0, -1));
     } finally {
@@ -100,6 +127,8 @@ How can I help you today? You can ask me to analyze your productivity, create go
       sendMessage();
     }
   };
+
+  const isBusy = loading || cooldown > 0;
 
   return (
     <div className="bg-[#0f2040] border border-[#1e3a5f] rounded-t-2xl
@@ -169,7 +198,7 @@ How can I help you today? You can ask me to analyze your productivity, create go
             <button
               key={prompt}
               onClick={() => sendMessage(prompt)}
-              disabled={loading}
+              disabled={isBusy}
               className="flex-shrink-0 text-[11px] text-[#8892b0] bg-[#112240]
                          border border-[#1e3a5f] rounded-full px-3 py-1.5
                          hover:border-[#00d4ff]/40 hover:text-[#00d4ff]
@@ -188,7 +217,8 @@ How can I help you today? You can ask me to analyze your productivity, create go
           value={input}
           onChange={(e) => setInput(e.target.value)}
           onKeyDown={handleKeyDown}
-          placeholder="Message Aegis..."
+          placeholder={cooldown > 0 ? `Wait ${cooldown}s…` : 'Message Aegis...'}
+          disabled={isBusy}
           rows={1}
           style={{ maxHeight: '100px', resize: 'none' }}
           className="flex-1 aegis-input text-sm py-2.5 leading-5
@@ -201,12 +231,16 @@ How can I help you today? You can ask me to analyze your productivity, create go
         />
         <button
           onClick={() => sendMessage()}
-          disabled={!input.trim() || loading}
+          disabled={!input.trim() || isBusy}
           className="p-2.5 rounded-xl bg-[#00d4ff] text-[#0a1628]
                      disabled:opacity-40 disabled:cursor-not-allowed
                      hover:bg-[#00b8d9] active:scale-95 transition-all"
         >
-          <Send size={18} strokeWidth={2.5} />
+          {cooldown > 0 ? (
+            <span className="text-xs font-bold">{cooldown}</span>
+          ) : (
+            <Send size={18} strokeWidth={2.5} />
+          )}
         </button>
       </div>
     </div>
