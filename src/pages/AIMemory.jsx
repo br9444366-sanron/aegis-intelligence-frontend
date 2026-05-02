@@ -161,7 +161,7 @@ export default function AIMemory() {
           { v: 'insights', label: '🧠 Insights' },
         ].map(({ v, label }) => (
           <button key={v} onClick={() => setActiveView(v)} style={{
-            padding: '9px 20px', borderRadius: 999, border: 'none', cursor: 'pointer',
+            padding: '9px 20px', borderRadius: 999, cursor: 'pointer',
             background: activeView === v ? '#6e50be' : '#111118',
             color: activeView === v ? 'white' : '#71717a',
             fontSize: 13, fontWeight: 500,

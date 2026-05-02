@@ -123,7 +123,6 @@ export default defineConfig({
         // Split vendor libraries into separate chunks for better caching
         manualChunks: {
           'react-vendor':    ['react', 'react-dom', 'react-router-dom'],
-          'firebase-vendor': ['firebase'],
           'chart-vendor':    ['recharts'],
           'utils-vendor':    ['axios', 'date-fns', 'zustand'],
         },

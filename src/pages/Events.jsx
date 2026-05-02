@@ -106,7 +106,7 @@ export default function Events() {
       <div style={{ display:'flex', gap:8, padding:'14px 16px 0', alignItems:'center' }}>
         {['upcoming','past'].map(f => (
           <button key={f} onClick={() => setFilter(f)} style={{
-            flex:1, padding:'9px 0', borderRadius:999, border:'none', cursor:'pointer',
+            flex:1, padding:'9px 0', borderRadius:999, cursor:'pointer',
             background: filter===f ? '#6e50be' : '#111118',
             color: filter===f ? 'white' : '#71717a', fontSize:13, fontWeight:500,
             border: filter===f ? 'none' : '1px solid rgba(255,255,255,0.06)',

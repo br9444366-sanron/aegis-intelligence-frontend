@@ -97,7 +97,7 @@ export default function Diary() {
           <div style={{ display:'flex', gap:8, marginBottom:14 }}>
             {MOODS.map(m => (
               <button key={m.value} onClick={() => setSelectedMood(m.value)} style={{
-                flex:1, padding:'10px 0', borderRadius:14, border:'none', cursor:'pointer',
+                flex:1, padding:'10px 0', borderRadius:14, cursor:'pointer',
                 background: selectedMood===m.value ? `${m.color}20` : '#18181f',
                 border: selectedMood===m.value ? `1px solid ${m.color}40` : '1px solid rgba(255,255,255,0.06)',
                 display:'flex', flexDirection:'column', alignItems:'center', gap:3, transition:'all 0.15s',

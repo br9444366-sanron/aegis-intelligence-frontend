@@ -107,7 +107,7 @@ export default function Schedule() {
       {/* Add task button */}
       <div style={{ padding:'12px 16px 0' }}>
         <button onClick={() => setShowForm(v=>!v)} style={{
-          width:'100%', padding:'13px 0', borderRadius:14, border:'none', cursor:'pointer',
+          width:'100%', padding:'13px 0', borderRadius:14, cursor:'pointer',
           background: showForm ? '#111118' : 'linear-gradient(135deg,#6e50be,#5b3fa8)',
           color:'white', fontWeight:600, fontSize:14,
           display:'flex', alignItems:'center', justifyContent:'center', gap:8,
