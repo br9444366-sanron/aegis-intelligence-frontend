@@ -9,6 +9,8 @@
  *  - Images / fonts            → Cache-first with long TTL
  * ============================================================
  */
+/* global self */
+self.__WB_MANIFEST;
 
 const CACHE_VERSION = 'v2.1.0';
 const SHELL_CACHE   = `aegis-shell-${CACHE_VERSION}`;

@@ -36,9 +36,8 @@ export default defineConfig({
       // Use our custom hand-crafted service worker (sw.js in /public)
       // instead of the auto-generated one. This gives us full control
       // over caching strategies.
-      strategies: 'injectManifest',
-      srcDir: 'public',
-      filename: 'sw.js',
+      strategies: 'generateSW',
+
 
       // Inject the Vite build manifest into the SW so it can
       // pre-cache the hashed JS/CSS chunks automatically.
